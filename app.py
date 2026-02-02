@@ -49,9 +49,30 @@ div[data-testid="stAlert"] > div {
 div[data-testid="stAlert"] {
     margin: 0px !important;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown(
+    """
+    <style>
+    /* 定位到 label 的容器并强制其内部内容居中 */
+    [data-testid="stWidgetLabel"] {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+    
+    /* 确保里面的文字元素也居中 */
+    [data-testid="stWidgetLabel"] p {
+        display: justify-content;
+        justify-content: center;
+        text-align: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 
