@@ -202,7 +202,7 @@ with col_ff:
             
             elapsed = (datetime.datetime.now() - start_time).total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
-            #st.rerun()
+            st.rerun()
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1.2])
     with sub_col1:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
@@ -258,7 +258,7 @@ with col_light:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff2.png"}
-        #st.rerun()
+        st.rerun()
     sub_col3, sub_col4,sub_col5 = st.columns([1, 2,1.2])
     with sub_col3:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
