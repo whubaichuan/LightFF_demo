@@ -15,6 +15,23 @@ from hydra import compose, initialize
 # --- 1. 页面配置 ---
 st.set_page_config(page_title="LightFF", layout="wide")
 
+st.markdown(
+    """
+    <style>
+    /* 调整侧边栏整体宽度 */
+    section[data-testid="stSidebar"] {
+        width: 150px !important; # 这里设置你想要的像素值
+    }
+    
+    /* 确保主内容区域根据新的侧边栏宽度自动重排 */
+    [data-testid="stSidebarNav"] {
+        width: 350px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 st.markdown("""
 <style>
 div[data-testid="stAlert"] {
@@ -103,7 +120,7 @@ with st.container():
             st.session_state.order_img = (st.session_state.order_img + 1) % 1000
             st.session_state.ff_res["time"] = 0
             st.session_state.lightff_res["time"] = 0
-    col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 0.8, 2])
+    col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 1, 2])
     with col_ctrl2:
         #user_input = st.text_input("", value=str(st.session_state.order_img + 1))
         #user_input = st.number_input("or enter image index from 1 to 1000) (try 116, 248, 322, 341, 660, 957):", min_value=0, max_value=1000)
