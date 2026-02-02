@@ -48,9 +48,10 @@ model, outputs = load_model_and_outputs(opt)
 if 'order_img' not in st.session_state:
     st.session_state.order_img = 0
 if 'lightff_res' not in st.session_state:
-    st.session_state.lightff_res = {"label": "→7", "time": 0, "img": "./img/blank.png"}
+    st.session_state.lightff_res = {"label": "→7", "time": 0, "img": "./img/blank.png", "img_done": False}
 if 'ff_res' not in st.session_state:
-    st.session_state.ff_res = {"label": "→7", "time": 0, "img": "./img/blank.png"}
+    st.session_state.ff_res = {"label": "→7", "time": 0, "img": "./img/blank.png", "img_done": False}
+
 
 # --- 4. 核心逻辑函数 ---
 def load_sample(idx):
@@ -107,6 +108,7 @@ with col_ff:
     if st.button("Step 2: Run FF", width='stretch',key="btn_ff",type="primary"):
         st.session_state.ff_res = {"img": "./img/blank.png"}
         st.session_state.ff_res["time"] = 0
+        st.session_state.ff_res["img_done"] = False
         # 模拟 test_one_by_one_ff
         #start = datetime.datetime.now()
         # feedback = model.forward_downstream...(current_tensor)
@@ -128,7 +130,6 @@ with col_ff:
             elapsed = (datetime.datetime.now() - start_time).total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
             st.rerun()
-    st.session_state.ff_res["img_done"] = False
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1])
     with sub_col1:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
@@ -151,6 +152,7 @@ with col_light:
     if st.button("Step 3:  Run LightFF", width='stretch',key="btn_lff",type="primary"):
         st.session_state.lightff_res = { "img": "./img/blank.png"}
         st.session_state.lightff_res["time"] = 0
+        st.session_state.lightff_res["img_done"] = False
         # 模拟 test_one_by_one
         #start = datetime.datetime.now()
         # feedback = model.forward_downstream_one_by_one(...)
@@ -181,7 +183,6 @@ with col_light:
         elif run_layer==2:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff2.png"}
         st.rerun()
-    st.session_state.lightff_res["img_done"] = False
     sub_col3, sub_col4,sub_col5 = st.columns([1, 2,1])
     with sub_col3:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
