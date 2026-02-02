@@ -34,13 +34,25 @@ st.markdown(
 
 st.markdown("""
 <style>
+/* 1. 让 info 框内的文字水平居中 */
+div[data-testid="stAlert"] > div {
+    text-align: center;
+    justify-content: center; /* 针对某些 flex 布局的情况 */
+}
+
+/* 锁定 st.columns 的容器 */
+[data-testid="stHorizontalBlock"] {
+    align-items: center; /* 关键：让所有列的内容在垂直方向居中对齐 */
+}
+
+/* 优化：消除 info 框默认的顶部边距，确保对齐更精准 */
 div[data-testid="stAlert"] {
-    padding: 30px;        /* 变大 */
-    font-size: 18px;      /* 字体变大 → 框也变大 */
-    margin-top: 3px !important;
+    margin: 0px !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
+
 
 
 # --- 2. 缓存模型加载 (核心优化) ---
@@ -242,9 +254,9 @@ if st.session_state.lightff_res["time"]!=0 and st.session_state.ff_res["time"]!=
     saved_time = st.session_state.ff_res['time'] - st.session_state.lightff_res['time']
     if saved_time > 0:
         energy = saved_time / 3600 * 5 * 1000 * 1000 # 沿用你的公式
-        st.success(f"⚡ You saved {energy:.3f} μWh Electric Energy")
+        st.success(f"⚡ You saved {energy:.3f} μWh Electric Energy!")
     else:
         st.success(f"⚡ Try LightFF again!")
 else:
-    st.success(f"⚡ You will save Energy Here")
+    st.success(f"⚡ You will save energy here!")
 
