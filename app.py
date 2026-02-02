@@ -105,6 +105,8 @@ with col_ff:
     with metric_col:
         st.metric("Time Consumed", f"{st.session_state.ff_res['time']*1000:.3f} ms")
     if st.button("Step 2: Run FF", use_container_width=True,key="btn_ff",type="primary"):
+        st.session_state.ff_res = {"img": "./img/blank.png"}
+        st.session_state.ff_res["time"] = 0
         # 模拟 test_one_by_one_ff
         #start = datetime.datetime.now()
         # feedback = model.forward_downstream...(current_tensor)
@@ -146,6 +148,8 @@ with col_light:
     with metric_col:
         st.metric("Time Consumed", f"{st.session_state.lightff_res['time']*1000:.3f} ms")
     if st.button("Step 3:  Run LightFF", use_container_width=True,key="btn_lff",type="primary"):
+        st.session_state.lightff_res = { "img": "./img/blank.png"}
+        st.session_state.lightff_res["time"] = 0
         # 模拟 test_one_by_one
         #start = datetime.datetime.now()
         # feedback = model.forward_downstream_one_by_one(...)
