@@ -20,7 +20,7 @@ def parse_args(opt):
     torch.manual_seed(opt.seed)
     random.seed(opt.seed)
 
-    print(OmegaConf.to_yaml(opt))
+    #print(OmegaConf.to_yaml(opt))
     return opt
 
 def get_input_layer_size(opt):
@@ -41,7 +41,7 @@ def get_model_and_optimizer(opt):
     model = ff_model.FF_model(opt)
     if "cuda" in opt.device:
         model = model.cuda()
-    print(model, "\n")
+    #print(model, "\n")
 
 
     # Create optimizer with different hyper-parameters for the main model

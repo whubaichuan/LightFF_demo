@@ -76,7 +76,7 @@ st.title('🚀 Lightweight Inference for Forward-Forward Algorithm')
 with st.container():
     col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([1, 2, 1])
     with col_ctrl2:
-        if st.button("Step 1: Load New Image", use_container_width=True,type="primary"):
+        if st.button("Step 1: Load New Image", width='stretch',type="primary"):
             st.session_state.lightff_res = { "img": "./img/blank.png"}
             st.session_state.ff_res = {"img": "./img/blank.png"}
             st.session_state.order_img = (st.session_state.order_img + 1) % 1000
@@ -104,7 +104,7 @@ with col_ff:
         st.header("FF")
     with metric_col:
         st.metric("Time Consumed", f"{st.session_state.ff_res['time']*1000:.3f} ms")
-    if st.button("Step 2: Run FF", use_container_width=True,key="btn_ff",type="primary"):
+    if st.button("Step 2: Run FF", width='stretch',key="btn_ff",type="primary"):
         st.session_state.ff_res = {"img": "./img/blank.png"}
         st.session_state.ff_res["time"] = 0
         # 模拟 test_one_by_one_ff
@@ -120,24 +120,24 @@ with col_ff:
                 }
 
             start_time = datetime.datetime.now()
-
+            #time.sleep(0.5)
             scalar_outputs,feedback = model.forward_downstream_classification_model(
                 current_tensor.clone(), current_label,scalar_outputs=scalar_outputs,index=opt.model.num_layers-1
             )
             
             elapsed = (datetime.datetime.now() - start_time).total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
-            st.rerun()
+            #st.rerun()
 
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1])
     with sub_col1:
-        st.image(current_img, caption=f"Input Label: {current_label}", use_container_width=True)
+        st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col2:
         img_ff_slot = st.empty()
         #st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
     with sub_col3:
         info_ff_slot = st.empty()
-    img_ff_slot.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+    img_ff_slot.image(st.session_state.ff_res["img"],caption='',width='stretch')
     if st.session_state.ff_res["time"]!=0:
         info_ff_slot.info(f"Predict Label: {st.session_state.ff_res['label']}")
             #st.info(f"Predict Label: {st.session_state.ff_res['label']}")
@@ -151,7 +151,7 @@ with col_light:
         st.header("LightFF")
     with metric_col:
         st.metric("Time Consumed", f"{st.session_state.lightff_res['time']*1000:.3f} ms")
-    if st.button("Step 3:  Run LightFF", use_container_width=True,key="btn_lff",type="primary"):
+    if st.button("Step 3:  Run LightFF", width='stretch',key="btn_lff",type="primary"):
         st.session_state.lightff_res = { "img": "./img/blank.png"}
         st.session_state.lightff_res["time"] = 0
         # 模拟 test_one_by_one
@@ -163,6 +163,7 @@ with col_light:
         run_layer = 0
         with torch.no_grad():
             start_time = datetime.datetime.now()
+            #time.sleep(0.5)
             for i in range(opt.model.num_layers):
                 feedback,output = model.forward_downstream_classification_one_by_one(
                     current_tensor.clone(), current_label, scalar_outputs=outputs,index=i
@@ -182,17 +183,17 @@ with col_light:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff2.png"}
-        st.rerun()
+        #st.rerun()
     sub_col3, sub_col4,sub_col5 = st.columns([1, 2,1])
     with sub_col3:
-        st.image(current_img, caption=f"Input Label: {current_label}", use_container_width=True)
+        st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col4:
         img_lightff_slot = st.empty()
         #st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
     with sub_col5:
         info_lightff_slot = st.empty()
 
-    img_lightff_slot.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+    img_lightff_slot.image(st.session_state.lightff_res["img"],caption='',width='stretch')
     if st.session_state.lightff_res["time"]!=0:
         info_lightff_slot.info(f"Predict Label: {st.session_state.lightff_res['label']}")
 
