@@ -194,14 +194,15 @@ with col_ff:
                 scalar_outputs = {
                     "Loss": torch.zeros(1, device=opt.device),
                 }
-
-            start_time = time.perf_counter()#datetime.datetime.now()
-            #time.sleep(0.5)
-            scalar_outputs,feedback = model.forward_downstream_classification_model(
-                current_tensor.clone(), current_label,scalar_outputs=scalar_outputs,index=opt.model.num_layers-1
-            )
-            
-            elapsed = (time.perf_counter() - start_time)#.total_seconds()
+            current_tensor_clone = current_tensor.clone()
+            elapsed=0
+            for _ in range(10):
+                start_time = time.perf_counter()#datetime.datetime.now()
+                #time.sleep(0.5)
+                scalar_outputs,feedback = model.forward_downstream_classification_model(
+                    current_tensor_clone, current_label,scalar_outputs=scalar_outputs,index=opt.model.num_layers-1
+                )
+                elapsed+= (time.perf_counter() - start_time)#.total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
             st.rerun()
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1.2])
@@ -237,23 +238,25 @@ with col_light:
         elapsed_single_run=0
         with torch.no_grad():
             #time.sleep(0.5)
-            for i in range(opt.model.num_layers):
-                start_time = time.perf_counter()#datetime.datetime.now()
-                feedback,output = model.forward_downstream_classification_one_by_one(
-                    current_tensor.clone(), current_label, scalar_outputs=outputs,index=i
-                )
-                end_time = time.perf_counter()#datetime.datetime.now()
-                elapsed_single_run+=(end_time - start_time)#.total_seconds()
-                if feedback == 'contine' and i!=opt.model.num_layers-1:
-                    second_layer_flag = 1
-                    continue
-                else:
-                    #end_time = datetime.datetime.now()
-                    if second_layer_flag==0:
-                        run_layer = 1
-                    elif second_layer_flag==1:
-                        run_layer =2
-                    break
+            for _ in range(10):
+                for i in range(opt.model.num_layers):
+                    current_tensor_clone = current_tensor.clone()
+                    start_time = time.perf_counter()#datetime.datetime.now()
+                    feedback,output = model.forward_downstream_classification_one_by_one(
+                        current_tensor_clone, current_label, scalar_outputs=outputs,index=i
+                    )
+                    end_time = time.perf_counter()#datetime.datetime.now()
+                    elapsed_single_run+=(end_time - start_time)#.total_seconds()
+                    if feedback == 'contine' and i!=opt.model.num_layers-1:
+                        second_layer_flag = 1
+                        continue
+                    else:
+                        #end_time = datetime.datetime.now()
+                        if second_layer_flag==0:
+                            run_layer = 1
+                        elif second_layer_flag==1:
+                            run_layer =2
+                        break
             elapsed = elapsed_single_run
         if run_layer==1:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
