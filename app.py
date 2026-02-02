@@ -133,7 +133,7 @@ with col_ff:
     with sub_col1:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col2:
-        st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+        st.image(st.session_state.ff_res["img"],caption='',width='stretch')
     st.session_state.ff_res["img_done"] = True
     with sub_col3:
         if st.session_state.ff_res["time"]!=0 and st.session_state.ff_res["img_done"]:
@@ -186,7 +186,7 @@ with col_light:
     with sub_col3:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col4:
-        st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+        st.image(st.session_state.lightff_res["img"],caption='',width='stretch')
     st.session_state.lightff_res["img_done"] = True
     with sub_col5:
         if st.session_state.lightff_res["time"]!=0 and st.session_state.lightff_res["img_done"]:
