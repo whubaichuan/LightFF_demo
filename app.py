@@ -160,24 +160,27 @@ with col_light:
         model.eval()
         second_layer_flag = 0
         run_layer = 0
+        elapsed_single_run=0
         with torch.no_grad():
-            start_time = datetime.datetime.now()
             #time.sleep(0.5)
             for i in range(opt.model.num_layers):
+                start_time = datetime.datetime.now()
                 feedback,output = model.forward_downstream_classification_one_by_one(
                     current_tensor.clone(), current_label, scalar_outputs=outputs,index=i
                 )
+                end_time = datetime.datetime.now()
+                elapsed_single_run+=(end_time - start_time).total_seconds()
                 if feedback == 'contine' and i!=opt.model.num_layers-1:
                     second_layer_flag = 1
                     continue
                 else:
-                    end_time = datetime.datetime.now()
+                    #end_time = datetime.datetime.now()
                     if second_layer_flag==0:
                         run_layer = 1
                     elif second_layer_flag==1:
                         run_layer =2
                     break
-            elapsed = (end_time - start_time).total_seconds()
+            elapsed = elapsed_single_run
         if run_layer==1:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
