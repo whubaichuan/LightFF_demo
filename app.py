@@ -127,22 +127,19 @@ with col_ff:
             
             elapsed = (datetime.datetime.now() - start_time).total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
-            #st.rerun()
-
+            st.rerun()
+    st.session_state.ff_res["img_done"] = False
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1])
     with sub_col1:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col2:
-        img_ff_slot = st.empty()
-        #st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+        st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+    st.session_state.ff_res["img_done"] = True
     with sub_col3:
-        info_ff_slot = st.empty()
-    img_ff_slot.image(st.session_state.ff_res["img"],caption='',width='stretch')
-    if st.session_state.ff_res["time"]!=0:
-        info_ff_slot.info(f"Predict Label: {st.session_state.ff_res['label']}")
-            #st.info(f"Predict Label: {st.session_state.ff_res['label']}")
-        #else:
-            #st.info("               ")
+        if st.session_state.ff_res["time"]!=0 and st.session_state.ff_res["img_done"]:
+            st.info(f"Predict Label: {st.session_state.ff_res['label']}")
+            #else:
+                #st.info("               ")
 
 # --- LightFF 侧 (右) ---
 with col_light:
@@ -183,19 +180,17 @@ with col_light:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff2.png"}
-        #st.rerun()
+        st.rerun()
+    st.session_state.lightff_res["img_done"] = False
     sub_col3, sub_col4,sub_col5 = st.columns([1, 2,1])
     with sub_col3:
         st.image(current_img, caption=f"Input Label: {current_label}", width='stretch')
     with sub_col4:
-        img_lightff_slot = st.empty()
-        #st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+        st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+    st.session_state.lightff_res["img_done"] = True
     with sub_col5:
-        info_lightff_slot = st.empty()
-
-    img_lightff_slot.image(st.session_state.lightff_res["img"],caption='',width='stretch')
-    if st.session_state.lightff_res["time"]!=0:
-        info_lightff_slot.info(f"Predict Label: {st.session_state.lightff_res['label']}")
+        if st.session_state.lightff_res["time"]!=0 and st.session_state.lightff_res["img_done"]:
+            st.info(f"Predict Label: {st.session_state.lightff_res['label']}")
 
 # --- 底部：能量节省统计 ---
 #st.divider()
