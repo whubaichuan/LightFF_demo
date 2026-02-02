@@ -72,6 +72,17 @@ def load_sample(idx):
 # --- 5. UI 布局 ---
 st.title('🚀 Lightweight Inference for Forward-Forward Algorithm')
 
+with st.sidebar:
+    col1, col2, col3 = st.columns([1, 5, 1])
+    with col2:
+        st.image("./img/111.svg", width=150) 
+    st.markdown("### 🛠️ Powered by: [the Intelligent Systems Laboratory](https://amir6584.github.io/intelligent_systems_laboratory/)")
+    #st.markdown(" Research Info:")
+    st.markdown("### 🧑‍🔬 **Authors:**\n* Amin Aminifar\n* <u>Baichuan Huang</u> \n* Azra Abtahi \n*  Amir Aminifar ",unsafe_allow_html=True)
+    st.markdown("📄 **Paper:** [LightFF: Lightweight Inference for Forward-Forward Algorithm](https://ebooks.iospress.nl/doi/10.3233/FAIA240682)")
+    st.markdown("💻 **Code:** [GitHub Repository](https://github.com/AminAminifar/LightFF)")
+    st.caption("Version: v1.0.0")
+
 def update_index():
     # 只有当用户真的改了数字并回车，才会运行这里
     new_val = st.session_state.my_input_key
@@ -215,3 +226,4 @@ if st.session_state.lightff_res["time"]!=0 and st.session_state.ff_res["time"]!=
     if saved_time > 0:
         energy = saved_time / 3600 * 5 * 1000 * 1000 # 沿用你的公式
         st.success(f"⚡ You saved {energy:.3f} μWh Electric Energy")
+
