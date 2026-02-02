@@ -133,10 +133,14 @@ with col_ff:
     with sub_col1:
         st.image(current_img, caption=f"Input Label: {current_label}", use_container_width=True)
     with sub_col2:
-        st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+        img_slot = st.empty()
+        #st.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
     with sub_col3:
-        if st.session_state.ff_res["time"]!=0:
-            st.info(f"Predict Label: {st.session_state.ff_res['label']}")
+        info_slot = st.empty()
+    img_slot.image(st.session_state.ff_res["img"],caption='',use_container_width=True)
+    if st.session_state.ff_res["time"]!=0:
+        info_slot.info(f"Predict Label: {st.session_state.ff_res['label']}")
+            #st.info(f"Predict Label: {st.session_state.ff_res['label']}")
         #else:
             #st.info("               ")
 
@@ -173,7 +177,7 @@ with col_light:
                     elif second_layer_flag==1:
                         run_layer =2
                     break
-            elapsed = (datetime.datetime.now() - start_time).total_seconds()
+            elapsed = (end_time - start_time).total_seconds()
         if run_layer==1:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
@@ -183,10 +187,14 @@ with col_light:
     with sub_col3:
         st.image(current_img, caption=f"Input Label: {current_label}", use_container_width=True)
     with sub_col4:
-        st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+        img_slot = st.empty()
+        #st.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
     with sub_col5:
-        if st.session_state.lightff_res["time"]!=0:
-            st.info(f"Predict Label: {st.session_state.lightff_res['label']}")
+        info_slot = st.empty()
+
+    img_slot.image(st.session_state.lightff_res["img"],caption='',use_container_width=True)
+    if st.session_state.lightff_res["time"]!=0:
+        info_slot.info(f"Predict Label: {st.session_state.lightff_res['label']}")
 
 # --- 底部：能量节省统计 ---
 #st.divider()
