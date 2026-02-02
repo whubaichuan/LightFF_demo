@@ -82,6 +82,7 @@ def load_model_and_outputs(_opt):
     # 这里模拟你的 my_main 初始逻辑
     model, _ = utils.get_model_and_optimizer(_opt)
     model.load_state_dict(torch.load('./FF_OP_model_2.pth'))
+    model.eval()
     with open('outputs.pkl', 'rb') as file:
          outputs = pickle.load(file)
     return model, outputs
@@ -194,13 +195,13 @@ with col_ff:
                     "Loss": torch.zeros(1, device=opt.device),
                 }
 
-            start_time = datetime.datetime.now()
+            start_time = time.perf_counter()#datetime.datetime.now()
             #time.sleep(0.5)
             scalar_outputs,feedback = model.forward_downstream_classification_model(
                 current_tensor.clone(), current_label,scalar_outputs=scalar_outputs,index=opt.model.num_layers-1
             )
             
-            elapsed = (datetime.datetime.now() - start_time).total_seconds()
+            elapsed = (time.perf_counter() - start_time)#.total_seconds()
             st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
             st.rerun()
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1.2])
@@ -237,12 +238,12 @@ with col_light:
         with torch.no_grad():
             #time.sleep(0.5)
             for i in range(opt.model.num_layers):
-                start_time = datetime.datetime.now()
+                start_time = time.perf_counter()#datetime.datetime.now()
                 feedback,output = model.forward_downstream_classification_one_by_one(
                     current_tensor.clone(), current_label, scalar_outputs=outputs,index=i
                 )
-                end_time = datetime.datetime.now()
-                elapsed_single_run+=(end_time - start_time).total_seconds()
+                end_time = time.perf_counter()#datetime.datetime.now()
+                elapsed_single_run+=(end_time - start_time)#.total_seconds()
                 if feedback == 'contine' and i!=opt.model.num_layers-1:
                     second_layer_flag = 1
                     continue
