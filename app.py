@@ -203,7 +203,7 @@ with col_ff:
                     current_tensor_clone, current_label,scalar_outputs=scalar_outputs,index=opt.model.num_layers-1
                 )
                 elapsed+= (time.perf_counter() - start_time)#.total_seconds()
-            st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed, "img": "./img/ff.png"}
+            st.session_state.ff_res = {"label": feedback.numpy()[0], "time": elapsed/10, "img": "./img/ff.png"}
             st.rerun()
     sub_col1, sub_col2,sub_col3 = st.columns([1, 2,1.2])
     with sub_col1:
@@ -257,7 +257,7 @@ with col_light:
                         elif second_layer_flag==1:
                             run_layer =2
                         break
-            elapsed = elapsed_single_run
+            elapsed = elapsed_single_run/10
         if run_layer==1:
             st.session_state.lightff_res = {"label": feedback, "time": elapsed, "img": "./img/lightff1.png"}
         elif run_layer==2:
