@@ -52,7 +52,6 @@ if 'lightff_res' not in st.session_state:
 if 'ff_res' not in st.session_state:
     st.session_state.ff_res = {"label": "→7", "time": 0, "img": "./img/blank.png", "img_done": False}
 
-
 # --- 4. 核心逻辑函数 ---
 def load_sample(idx):
     """加载图片和标签数据"""
@@ -73,6 +72,16 @@ def load_sample(idx):
 # --- 5. UI 布局 ---
 st.title('🚀 Lightweight Inference for Forward-Forward Algorithm')
 
+def update_index():
+    # 只有当用户真的改了数字并回车，才会运行这里
+    new_val = st.session_state.my_input_key
+    if new_val > 0:
+        st.session_state.order_img = new_val - 1
+        st.session_state.ff_res = {"img": "./img/blank.png"}
+        st.session_state.ff_res["time"] = 0
+        st.session_state.lightff_res = { "img": "./img/blank.png"}
+        st.session_state.lightff_res["time"] = 0
+
 # 底部输入控制区
 with st.container():
     col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([1, 2, 1])
@@ -83,12 +92,15 @@ with st.container():
             st.session_state.order_img = (st.session_state.order_img + 1) % 1000
             st.session_state.ff_res["time"] = 0
             st.session_state.lightff_res["time"] = 0
-    col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 1.8, 2])
+    col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 0.8, 2])
     with col_ctrl2:
         #user_input = st.text_input("", value=str(st.session_state.order_img + 1))
-        user_input = st.number_input("or enter image index from 1 to 1000) (try 116, 248, 322, 341, 660, 957):", min_value=0, max_value=1000)
-        if user_input:
-            st.session_state.order_img = int(user_input) - 1
+        #user_input = st.number_input("or enter image index from 1 to 1000) (try 116, 248, 322, 341, 660, 957):", min_value=0, max_value=1000)
+        st.number_input("or enter image index from 1 to 1000:", min_value=1, max_value=1000,key="my_input_key", on_change=update_index )
+        #user_input = st.number_input("or enter image index from 1 to 1000:", min_value=0, max_value=1000)
+        # if user_input:
+        #     st.session_state.order_img = int(user_input) - 1
+
     #with col_ctrl2:
         #st.write("Or enter 1-1000 (Try: 116, 248, 322, 341, 660, 957):")
         #st.info("Try: 116, 248, 322, 341, 660, 957")
