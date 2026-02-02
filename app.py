@@ -25,7 +25,7 @@ st.markdown(
     
     /* 确保主内容区域根据新的侧边栏宽度自动重排 */
     [data-testid="stSidebarNav"] {
-        width: 350px !important;
+        width: 150px !important;
     }
     </style>
     """,
@@ -243,4 +243,8 @@ if st.session_state.lightff_res["time"]!=0 and st.session_state.ff_res["time"]!=
     if saved_time > 0:
         energy = saved_time / 3600 * 5 * 1000 * 1000 # 沿用你的公式
         st.success(f"⚡ You saved {energy:.3f} μWh Electric Energy")
+    else:
+        st.success(f"⚡ Try LightFF again!")
+else:
+    st.success(f"⚡ You will save Energy Here")
 
