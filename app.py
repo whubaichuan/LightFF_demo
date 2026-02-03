@@ -131,7 +131,8 @@ with st.sidebar:
     st.markdown("🏛 Supported by [the Intelligent Systems Laboratory](https://amir6584.github.io/intelligent_systems_laboratory/)")
     #st.markdown(" Research Info:")
     st.markdown("📄 Paper: [LightFF: Lightweight Inference for Forward-Forward Algorithm](https://ebooks.iospress.nl/doi/10.3233/FAIA240682)")
-    #st.markdown("### 🧑‍🔬 **Paper Authors:**\n* Amin Aminifar\n* <u>Baichuan Huang</u> \n* Azra Abtahi \n*  Amir Aminifar ",unsafe_allow_html=True)
+    st.markdown(" 🧑‍🔬 Paper Authors: [Amin Aminifar*](https://aminaminifar.github.io/info/), <u>Baichuan Huang</u>*, [Azra Abtahi](https://mau.se/personer/azra.abtahi-fahliani/), [Amir Aminifar](https://amir6584.github.io/intelligent_systems_laboratory/amir_aminifar/) ",unsafe_allow_html=True)
+    # st.markdown(" 🧑‍🔬 **Paper Authors:**\n* Amin Aminifar\n* <u>Baichuan Huang</u> \n* Azra Abtahi \n*  Amir Aminifar ",unsafe_allow_html=True)
     st.markdown("💻 Code: [GitHub Repository](https://github.com/AminAminifar/LightFF)")
     st.caption("Version: v1.0.0")
 
