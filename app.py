@@ -127,10 +127,11 @@ with st.sidebar:
     col1, col2, col3 = st.columns([1, 5, 1])
     with col2:
         st.image("./img/111.svg", width=150) 
-    st.markdown("### 🛠️ Powered by: [the Intelligent Systems Laboratory](https://amir6584.github.io/intelligent_systems_laboratory/)")
+    st.markdown("### 🛠️ Demo developed by [Baichuan Huang](https://whubaichuan.github.io/) ")
+    st.markdown("### 🏛 Supported by [the Intelligent Systems Laboratory](https://amir6584.github.io/intelligent_systems_laboratory/)")
     #st.markdown(" Research Info:")
-    st.markdown("### 🧑‍🔬 **Authors:**\n* Amin Aminifar\n* <u>Baichuan Huang</u> \n* Azra Abtahi \n*  Amir Aminifar ",unsafe_allow_html=True)
     st.markdown("📄 **Paper:** [LightFF: Lightweight Inference for Forward-Forward Algorithm](https://ebooks.iospress.nl/doi/10.3233/FAIA240682)")
+    #st.markdown("### 🧑‍🔬 **Paper Authors:**\n* Amin Aminifar\n* <u>Baichuan Huang</u> \n* Azra Abtahi \n*  Amir Aminifar ",unsafe_allow_html=True)
     st.markdown("💻 **Code:** [GitHub Repository](https://github.com/AminAminifar/LightFF)")
     st.caption("Version: v1.0.0")
 
